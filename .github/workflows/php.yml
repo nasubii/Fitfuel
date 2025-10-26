@@ -21,5 +21,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.ftp_password }}
-        git-ftp-args: --remote-root ${{ secrets.FTP_REMOTE_ROOT }}
+        server-dir: ${{ secrets.FTP_REMOTE_ROOT }}
         local-dir: pages
