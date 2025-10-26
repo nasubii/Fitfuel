@@ -18,8 +18,8 @@ jobs:
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@3.1.1
       with:
-        ftp_server: ${{ secrets.FTP_SERVER }}
+        ftp_server: ${{ secrets.FTP_HOST }}
         ftp_username: ${{ secrets.FTP_USERNAME }}
         ftp_password: ${{ secrets.ftp_password }}
-        remote-dir: ${{ secrets.FTP_REMOTE_ROOT }}
+        git-ftp-args: --remote-root ${{ secrets.FTP_REMOTE_ROOT }}
         local-dir: pages
