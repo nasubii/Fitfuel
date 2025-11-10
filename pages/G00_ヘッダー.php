@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="G00_ヘッダー.css" rel="stylesheet" type="text/css">
+    <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
     <title>ヘッダー</title>
 </head>
 <body>
@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="logo">
                     <a href="../index.php" aria-label="FitFuel ホーム">
-                        <img src="../refpic/.svg" alt="FitFuel">
+                        <img src="refpic/Fitfuel_logo.png" alt="FitFuel">
                     </a>
                 </div>
 
