@@ -91,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 }
 ?>
+<?php $passwordError = !empty($errors['password']); ?>
 <?php require 'G00_ヘッダー.php'; ?>
 
 <link rel="stylesheet" href="css/G07_ユーザー登録.css">
@@ -114,11 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="error"><?= htmlspecialchars($errors['mail'], ENT_QUOTES, 'UTF-8') ?></p>
             <?php endif; ?>
 
-            <label>パスワード</label>
-            <input type="password" name="password">
-            <?php if (!empty($errors['password'])): ?>
-                <p class="error"><?= htmlspecialchars($errors['password'], ENT_QUOTES, 'UTF-8') ?></p>
-            <?php endif; ?>
+                        <label>パスワード</label>
+                        <input type="password" name="password" id="password">
+                        <p class="error" id="password-length-error" data-force="<?= $passwordError ? '1' : '0' ?>"<?= $passwordError ? '' : ' style="display:none;"' ?>>パスワードは八文字以上で入力してください。</p>
 
             <label>パスワードの確認</label>
             <input type="password" name="password_confirm">
@@ -130,5 +129,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </main>
+
+<script>
+(function(){
+        var passwordInput = document.getElementById('password');
+        var message = document.getElementById('password-length-error');
+        if (!passwordInput || !message) {
+                return;
+        }
+
+        var force = message.dataset.force === '1';
+        var hasTyped = force;
+
+        var toggleMessage = function () {
+                var len = passwordInput.value.length;
+                if ((hasTyped || force) && len < 8) {
+                        message.style.display = 'block';
+                } else {
+                        message.style.display = 'none';
+                }
+        };
+
+        passwordInput.addEventListener('input', function () {
+                hasTyped = true;
+                force = false;
+                toggleMessage();
+        });
+        passwordInput.addEventListener('focus', function () {
+                if (passwordInput.value.length > 0) {
+                        hasTyped = true;
+                }
+                toggleMessage();
+        });
+        passwordInput.addEventListener('blur', toggleMessage);
+
+        toggleMessage();
+})();
+</script>
 
 <?php require 'G00_フッター.php'; ?>
