@@ -30,7 +30,6 @@
                     Fitfuel 株式会社<br>
                     〒000-0000 東京都○○区○○ 1-2-3
                 </address>
-                <p class="contact"><a href="#">お問い合わせ</a></p>
             </div>
         </div>
         <div class="footer-bottom">

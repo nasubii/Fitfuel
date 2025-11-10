@@ -24,4 +24,4 @@
   </form>
 </div>
 
-<?php require 'footer.php'; ?>
+<?php require 'G00_フッター.php'; ?>
