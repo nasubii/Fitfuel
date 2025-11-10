@@ -32,6 +32,7 @@ try {
     error_log("Database error: " . $e->getMessage());
 }
 ?>
+<?php require 'G00_ヘッダー.php'; ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -107,29 +108,7 @@ try {
     </section>
 
     <!-- カテゴリーセクション -->
-    <section class="categories">
-        <div class="categories-wrapper">
-            <div class="categories-overlay">
-                <div class="categories-list">
-                    <?php if (!empty($categories)): ?>
-                        <?php foreach ($categories as $category): ?>
-                            <a href="category.php?id=<?php echo $category['category_id']; ?>" class="category-link">
-                                <?php echo htmlspecialchars($category['category_name']); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <!-- サンプルカテゴリー(データベースにカテゴリーがない場合) -->
-                        <a href="category.php?name=protein" class="category-link">プロテイン</a>
-                        <a href="category.php?name=vitamin" class="category-link">ビタミン</a>
-                        <a href="category.php?name=supplement" class="category-link">サプリメント</a>
-                    <?php endif; ?>
-                </div>
-                <div class="categories-image">
-                    <img src="../refpic/dumbbell.png" alt="トレーニング" class="dumbbell-image">
-                </div>
-            </div>
-        </div>
-    </section>
 
+    <?php require 'G00_フッター.php'; ?>
 </body>
 </html>
