@@ -7,6 +7,6 @@
     <title>header</title>
 </head>
 <body>
-    
+    <?php require 'G00_ヘッダー.php'; ?>
 </body>
 </html>
