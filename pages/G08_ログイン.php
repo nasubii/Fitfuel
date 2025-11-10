@@ -8,7 +8,7 @@
 
   <form action="G08_ログインoutput.php" method="post">
     <label>ログインID</label>
-    <input type="text" name="mail" required>
+    <input type="text" name="user_id" required>
 
     <label>パスワード</label>
     <input type="password" name="password" required>
