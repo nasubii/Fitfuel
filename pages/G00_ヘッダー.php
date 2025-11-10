@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="icons">
-                    <a class="icon" href="#" title="マイページ">👤</a>
+                    <a class="icon" href="../pages/G06-1_ユーザー管理.php" title="マイページ">👤</a>
                     <a class="icon" href="../pages/G04_カート一覧.php" title="カート">🛒</a>
                     <a class="icon" href="../index.php" title="ホーム">🏠</a>
                 </div>
