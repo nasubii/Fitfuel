@@ -8,5 +8,6 @@
 </head>
 <body>
     <?php require 'G00_ヘッダー.php'; ?>
+    <?php require 'G00_フッター.php'; ?>
 </body>
 </html>
