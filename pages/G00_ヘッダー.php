@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
+    <style>
+        /* フォールバック: 外部CSSが読み込まれない場合でもヘッダーを固定する */
+        .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%}
+        body{padding-top:72px}
+    </style>
     <title>ヘッダー</title>
 </head>
 <body>
@@ -12,7 +17,7 @@
             <div class="container">
                 <div class="logo">
                     <a href="../index.php" aria-label="FitFuel ホーム">
-                        <img src="refpic/Fitfuel_logo.png" alt="FitFuel">
+                        <img src="refpic/fitfuel_logo.png" alt="FitFuel">
                     </a>
                 </div>
 
@@ -39,5 +44,18 @@
             </div>
         </nav>
     </header>
+    <script>
+        (function(){
+            var header = document.querySelector('.site-header');
+            function updateBodyPadding(){
+                if(!header) return;
+                var h = header.getBoundingClientRect().height;
+                document.body.style.paddingTop = h + 'px';
+            }
+            window.addEventListener('resize', updateBodyPadding);
+            document.addEventListener('DOMContentLoaded', updateBodyPadding);
+            if(document.readyState === 'complete' || document.readyState === 'interactive') updateBodyPadding();
+        })();
+    </script>
 </body>
 </html>

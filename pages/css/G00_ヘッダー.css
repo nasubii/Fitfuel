@@ -2,9 +2,10 @@
 *{box-sizing:border-box}
 body{font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif}
 .site-header{border-bottom:4px solid #bfeee6}
-.site-header{--header-height:72px;position:relative;width:100%;}
-.header-top{background:#fff;position:fixed;top:0;left:0;right:0;z-index:90;height:var(--header-height);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-.container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;height:100%}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%;}
+.site-header .header-top{--header-top-height:72px}
+.header-top{background:#fff;position:relative;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
 .logo a{display:inline-block}
 .logo img{height:40px;display:block;max-width:240px}
 
@@ -23,8 +24,9 @@ body{font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif}
 .category-nav .nav-inner{display:flex;justify-content:center;gap:48px;padding:10px 0}
 .category-nav a{color:#0b8f79;text-decoration:none;font-weight:600}
 
-/* 本文がヘッダーと重ならないよう余白を追加 */
-body{padding-top:var(--header-height)}
+/* 本文がヘッダーと重ならないよう、JSで動的に padding-top を設定します。
+	フォールバックとして小さめの余白を入れておきます。 */
+body{padding-top:72px}
 
 /* レスポンシブ */
 @media (max-width:800px){
