@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="64" viewBox="0 0 320 64">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#00d1c8"/>
+      <stop offset="100%" stop-color="#1a9fbf"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="none" />
+  <!-- simple muscle icon -->
+  <g transform="translate(8,6)">
+    <path d="M18 2 C12 2 6 8 6 14 C6 20 10 24 18 28 C26 24 30 20 30 14 C30 8 24 2 18 2 Z" fill="url(#g)" />
+  </g>
+  <text x="80" y="42" font-family="Segoe UI, Meiryo, 'Hiragino Kaku Gothic ProN', sans-serif" font-size="36" font-weight="700" fill="#0b2b3a">Fit</text>
+  <text x="140" y="42" font-family="Segoe UI, Meiryo, 'Hiragino Kaku Gothic ProN', sans-serif" font-size="36" font-weight="500" fill="url(#g)">Fuel</text>
+</svg>
