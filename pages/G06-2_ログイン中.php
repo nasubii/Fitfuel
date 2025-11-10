@@ -5,8 +5,8 @@
 
 <div class="success-box">
   <?php if (isset($_SESSION['customer'])): ?>
-    <p>いらっしゃいませ、<?= htmlspecialchars($_SESSION['customer']['name'], ENT_QUOTES, 'UTF-8'); ?>さん。</p>
-    <form action="logout.php" method="post">
+    <p>いらっしゃいませ、<?= htmlspecialchars($_SESSION['customer']['user_id'], ENT_QUOTES, 'UTF-8'); ?>さん。</p>
+    <form action="G08_ログアウト.php" method="post">
       <button type="submit" class="logout-btn">ログアウト</button>
     </form>
     <a href="index.php">トップへ戻る</a>
@@ -16,4 +16,4 @@
   <?php endif; ?>
 </div>
 
-<?php require 'footer.php'; ?>
+<?php require 'G00_フッター.php'; ?>

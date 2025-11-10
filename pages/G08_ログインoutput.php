@@ -43,6 +43,7 @@ $user = $stmt->fetch();
 if ($user && password_verify($password, $user['user_password'])) {
     // パスワードが一致したらログイン成功
     session_regenerate_id(true);
+    // セッション名を `customer` に統一（id, mail, name を格納）
     $_SESSION['customer'] = [
         'user_id' => $user['user_id'],
         'user_email' => $user['user_email'],

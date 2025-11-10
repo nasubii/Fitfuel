@@ -1,0 +1,11 @@
+/* ユーザー登録ページのスタイル（画面設計に合わせた見た目） */
+body{ font-family: "Hiragino Kaku Gothic ProN", Meiryo, "Yu Gothic", sans-serif; background:#f6f6f6; }
+.reg-main{ display:flex; justify-content:center; align-items:center; padding:40px 0; }
+.reg-card{ background:#eee; width:420px; box-shadow:0 6px 12px rgba(0,0,0,0.15); padding:28px 32px; border-radius:4px; }
+.reg-card h2{ text-align:center; margin:0 0 18px 0; font-size:20px; }
+.reg-card label{ display:block; font-size:18px; margin:12px 0 6px; }
+.reg-card input[type="text"], .reg-card input[type="password"]{ width:100%; padding:10px 12px; border:1px solid #bbb; border-radius:6px; box-sizing:border-box; background:#fff; }
+.reg-card .error{ color:#d81919; margin:8px 0 0; font-weight:700; }
+.submit-btn{ display:block; width:100%; margin-top:20px; padding:18px 0; background:#3b3940; color:#fff; border:none; border-radius:4px; font-size:20px; cursor:pointer; }
+.submit-btn:hover{ background:#2f2d33; }
+@media(max-width:480px){ .reg-card{ width:92%; padding:20px; } }
