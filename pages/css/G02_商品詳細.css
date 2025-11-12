@@ -1,0 +1,39 @@
+/* 商品詳細ページのスタイル */
+:root{
+	--green:#0aa58a;
+	--green-dark:#0b8a6f;
+	--light:#f6fffa;
+	--card-bg:#fff;
+	--shadow: 6px 6px 0 rgba(0,0,0,0.12);
+}
+body{
+	font-family: "Helvetica Neue", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+	background:#fff;
+	color:#0b3b34;
+	padding:40px 20px;
+}
+.container{max-width:1100px;margin:0 auto}
+.cards{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.card{background:var(--card-bg);border-radius:10px;padding:24px;box-shadow:var(--shadow);}
+.image-card{flex:0 0 420px;display:flex;align-items:center;justify-content:center;height:360px}
+.product-img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.no-image{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#777}
+.info-card{flex:1;min-width:300px}
+.product-title{font-size:1.6rem;margin:0 0 16px 0;color:var(--green-dark)}
+.product-title .size{font-size:0.9rem;color:#666;margin-left:8px}
+.price-box{display:inline-block;background:var(--light);padding:8px 12px;border-radius:4px;border:2px solid #cfeee2;margin-bottom:18px}
+.price{font-weight:700;font-size:1.4rem;color:#0b5b4d}
+.cart-form{margin-top:12px}
+.qty-label{display:block;margin-bottom:12px;background:#fff;padding:6px 10px;border-left:6px solid var(--green);width:140px;border-radius:4px}
+.qty-label input{width:60px;margin-left:8px;padding:4px}
+.add-cart{display:inline-block;background:var(--green-dark);color:#fff;border:none;padding:10px 18px;border-radius:4px;cursor:pointer}
+.add-cart:hover{background:var(--green)}
+.nutrition{margin-top:48px;display:flex;justify-content:center}
+.nuts-img{max-width:640px;width:100%;border-radius:12px;box-shadow:var(--shadow);}
+.message.error{background:#fff0f0;border:1px solid #ffcccc;padding:12px;border-radius:6px;color:#a00}
+
+@media (max-width:800px){
+	.cards{flex-direction:column}
+	.image-card{width:100%;height:300px}
+}
+
