@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
     <link href="css/G03_検索結果.css" rel="stylesheet" type="text/css">
+    <?php require_once 'G00_ヘッダー.php'; ?>
     <title>検索結果</title>
 </head>
 <body>
@@ -15,36 +16,45 @@
             'id' => 1,
             'title' => 'ホエイプロテイン カカオ味 1kg',
             'price' => 2900,
-            'image' => '../refpic/fitfuel_logo.svg',
+            'image' => 'refpic/protein.png',
+            'category' => 'プロテイン',
         ],
         [
             'id' => 2,
             'title' => 'ソイプロテイン ビターショコラ味 1kg',
             'price' => 2900,
-            'image' => '../refpic/fitfuel_logo.svg',
+            'image' => 'refpic/protein.png',
+            'category' => 'プロテイン',
         ],
         [
             'id' => 3,
             'title' => 'マルチビタミン',
             'price' => 1200,
-            'image' => '../refpic/fitfuel_logo.svg',
+            'image' => 'refpic/vitamin.png',
+            'category' => 'ビタミン',
+
         ],
     ];
 
-    // 検索キーワードを取得（GETパラメータ q）
+    // 検索キーワードとカテゴリを取得（GETパラメータ q, category）
     $q = isset($_GET['q']) ? trim($_GET['q']) : '';
+    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
-    // 絞り込み（大文字小文字を区別せず部分一致）
+    // 絞り込み（大文字小文字を区別せず部分一致、カテゴリは完全一致）
     $results = [];
-    if ($q === '') {
-        // キーワードが空ならすべて表示
-        $results = $products;
-    } else {
-        $low = mb_strtolower($q, 'UTF-8');
-        foreach ($products as $p) {
-            if (mb_strpos(mb_strtolower($p['title'], 'UTF-8'), $low) !== false) {
-                $results[] = $p;
-            }
+    foreach ($products as $p) {
+        $matchQ = true;
+        $matchCat = true;
+
+        if ($q !== '') {
+            $matchQ = (mb_strpos(mb_strtolower($p['title'], 'UTF-8'), mb_strtolower($q, 'UTF-8')) !== false);
+        }
+        if ($category !== '') {
+            $matchCat = ($p['category'] === $category);
+        }
+
+        if ($matchQ && $matchCat) {
+            $results[] = $p;
         }
     }
     ?>
@@ -73,5 +83,6 @@
             </div>
         </section>
     </main>
+    <?php require_once 'G00_フッター.php'; ?>
 </body>
 </html>
