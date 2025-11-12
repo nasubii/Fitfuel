@@ -1,0 +1,16 @@
+/* 商品詳細ページ */
+body{ font-family:"Hiragino Kaku Gothic ProN",Meiryo,"Yu Gothic",sans-serif; background:#fff; }
+.product-detail{ max-width:1100px; margin:24px auto; padding:12px; }
+.pd-top{ display:flex; gap:32px; align-items:flex-start; }
+.pd-image img{ width:320px; height:auto; border-radius:6px; box-shadow:0 6px 14px rgba(0,0,0,0.12); }
+.pd-info{ flex:1; }
+.pd-title{ font-size:22px; margin:0 0 12px; }
+.pd-price{ font-size:20px; color:#009944; margin-bottom:8px; }
+.pd-stock{ color:#666; margin-bottom:12px; }
+.pd-cart-form{ display:flex; gap:12px; align-items:center; }
+.pd-cart-form input[type=number]{ width:80px; padding:6px; }
+.add-cart{ background:#3b3940; color:#fff; padding:10px 16px; border:none; border-radius:4px; cursor:pointer; }
+.pd-nutrition{ margin-top:24px; }
+.pd-nutrition img{ max-width:600px; width:100%; height:auto; border-radius:6px; box-shadow:0 4px 8px rgba(0,0,0,0.08); }
+.error-box{ background:#fff0f0; border:1px solid #f0c0c0; color:#a00; padding:12px; border-radius:6px; }
+@media(max-width:800px){ .pd-top{ flex-direction:column; align-items:center; } .pd-image img{ width:100%; max-width:360px; } }
