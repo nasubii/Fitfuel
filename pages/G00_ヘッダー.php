@@ -23,7 +23,15 @@
 
                 <div class="search">
                     <form action="G03_検索結果.php" method="get">
-                        <?php $q = isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES) : ''; ?>
+                        <?php
+                        // 検索結果画面に遷移した場合は検索窓をリセットする
+                        $current = basename($_SERVER['PHP_SELF']);
+                        if ($current === 'G03_検索結果.php') {
+                            $q = '';
+                        } else {
+                            $q = isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES) : '';
+                        }
+                        ?>
                         <input type="text" name="q" placeholder="検索" aria-label="検索" value="<?php echo $q; ?>">
                         <button type="submit">検索</button>
                     </form>
@@ -39,7 +47,14 @@
 
         <nav class="category-nav">
             <div class="container nav-inner">
-                    <?php $qParam = (isset($_GET['q']) && $_GET['q'] !== '') ? '&q='.urlencode($_GET['q']) : ''; ?>
+                    <?php
+                    // 検索結果ページにいる場合は q を渡さない（検索後は検索窓をリセットするため）
+                    $current = basename($_SERVER['PHP_SELF']);
+                    $qParam = '';
+                    if ($current !== 'G03_検索結果.php' && isset($_GET['q']) && $_GET['q'] !== '') {
+                        $qParam = '&q='.urlencode($_GET['q']);
+                    }
+                    ?>
                     <a href="G03_検索結果.php?category=%E3%83%93%E3%82%BF%E3%83%9F%E3%83%B3<?php echo $qParam; ?>">ビタミン</a>
                     <a href="G03_検索結果.php?category=%E3%83%97%E3%83%AD%E3%83%86%E3%82%A4%E3%83%B3<?php echo $qParam; ?>">プロテイン</a>
                     <a href="G03_検索結果.php?category=%E3%82%B5%E3%83%97%E3%83%AA%E3%83%A1%E3%83%B3%E3%83%88<?php echo $qParam; ?>">サプリメント</a>
