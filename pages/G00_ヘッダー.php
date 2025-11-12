@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="search">
-                    <form action="../pages/G03_検索結果.php" method="get">
+                    <form action="../G03_検索結果.php" method="get">
                         <input type="text" name="q" placeholder="検索" aria-label="検索">
                         <button type="submit">検索</button>
                     </form>

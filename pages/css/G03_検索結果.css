@@ -1,0 +1,20 @@
+/* 検索結果ページ用スタイル */
+*{box-sizing:border-box}
+body{font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:#f7f7f7}
+.search-results-page{max-width:1200px;margin:20px auto;padding:0 16px}
+.results-panel{background:#fff;border:1px solid #ddd;border-radius:8px;padding:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+.results-title{font-size:22px;margin:0 0 12px;padding:6px 8px;border-radius:6px}
+.cards{display:flex;gap:18px}
+.card{width:180px;background:#fff;border:2px solid #e6e6e6;border-radius:18px;padding:12px;box-shadow:0 2px 4px rgba(0,0,0,0.03)}
+.card-image{height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.card-image img{max-height:100%;max-width:100%;border-radius:8px}
+.card-body{text-align:center}
+.product-title{font-size:13px;margin:6px 0;color:#333;height:36px;overflow:hidden}
+.price{background:#dff6ea;color:#017a5a;display:inline-block;padding:6px 10px;border-radius:6px;font-weight:700;margin:8px 0}
+.buy{display:inline-block;background:#26a7c0;color:#fff;border:0;padding:8px 18px;border-radius:6px;cursor:pointer}
+
+/* レスポンシブ */
+@media (max-width:680px){
+	.cards{flex-wrap:wrap;justify-content:flex-start}
+	.card{width:45%;margin-bottom:12px}
+}
