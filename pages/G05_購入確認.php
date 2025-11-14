@@ -2,6 +2,7 @@
 session_start();
 
 require_once '../config/database.php';
+require_once __DIR__ . '/helpers/cart.php';
 
 if (!isset($_SESSION['customer'])) {
     $_SESSION['login_error'] = '購入手続きにはログインが必要です。';
@@ -16,7 +17,9 @@ if (empty($_SESSION['checkout_form'])) {
 
 $userId = $_SESSION['customer']['user_id'];
 $formData = $_SESSION['checkout_form'];
-$cartItems = $_SESSION['cart'] ?? [];
+$sessionCart = isset($_SESSION['cart']) && is_array($_SESSION['cart']) ? $_SESSION['cart'] : [];
+$cartData = getCartDetails($pdo, $sessionCart);
+$cartItems = $cartData['items'];
 
 $errors = [];
 $successMessage = '';
@@ -56,13 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
     }
 }
 
-$cartSubtotal = 0;
-foreach ($cartItems as $item) {
-    $price = isset($item['product_price']) ? (int)$item['product_price'] : 0;
-    $qty = isset($item['quantity']) ? (int)$item['quantity'] : 1;
-    $cartSubtotal += $price * max($qty, 1);
-}
-
+$cartSubtotal = $cartData['total'];
 $shippingFee = $cartSubtotal >= 10000 ? 0 : 600;
 $cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
 
@@ -167,17 +164,12 @@ $maskedCard = str_repeat('*', max(0, strlen($formData['card_number']) - 4)) . su
             <?php else: ?>
                 <ul class="cart-items">
                     <?php foreach ($cartItems as $item): ?>
-                        <?php
-                            $price = isset($item['product_price']) ? (int)$item['product_price'] : 0;
-                            $qty = isset($item['quantity']) ? (int)$item['quantity'] : 1;
-                            $subtotal = $price * max($qty, 1);
-                        ?>
                         <li class="cart-item">
                             <div class="item-info">
                                 <p class="item-name"><?= htmlspecialchars($item['product_name'] ?? '商品名未設定', ENT_QUOTES, 'UTF-8'); ?></p>
-                                <p class="item-meta">数量: <?= max($qty, 1); ?> / ¥<?= number_format($price); ?></p>
+                                <p class="item-meta">数量: <?= (int)$item['quantity']; ?> / ¥<?= number_format((int)$item['product_price']); ?></p>
                             </div>
-                            <p class="item-subtotal">¥<?= number_format($subtotal); ?></p>
+                            <p class="item-subtotal">¥<?= number_format((int)$item['subtotal']); ?></p>
                         </li>
                     <?php endforeach; ?>
                 </ul>

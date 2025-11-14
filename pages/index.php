@@ -71,7 +71,7 @@ try {
                         <div class="product-divider"></div>
                         <h3 class="product-name"><?php echo htmlspecialchars($product['product_name']); ?></h3>
                         <p class="product-price">¥<?php echo number_format($product['product_price']); ?></p>
-                        <button class="buy-button" onclick="location.href='product_detail.php?id=<?php echo $product['product_id']; ?>'">購入</button>
+                        <button class="buy-button" onclick="location.href='G02_商品詳細.php?id=<?php echo $product['product_id']; ?>'">購入</button>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
