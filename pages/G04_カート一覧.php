@@ -1,12 +1,8 @@
 <?php
 session_start();
 
-// DB接続設定（必要に応じて環境に合わせて変更してください）
-$dbHost = '127.0.0.1';
-$dbName = 'fitfuel';
-$dbUser = 'root';
-
-$dbPass = '';
+// DB 接続（config/database.php 経由）
+require_once __DIR__ . '/../config/database.php';
 
 $message = '';
 
@@ -68,9 +64,6 @@ $total = 0;
 
 if (!empty($cart)) {
     try {
-        $dsn = "mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4";
-        $pdo = new PDO($dsn, $dbUser, $dbPass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-
         // 商品IDリストを用意してプレースホルダを作る
         $ids = array_map('intval', array_keys($cart));
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
