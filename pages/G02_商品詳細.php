@@ -2,7 +2,7 @@
 session_start();
 
 // DB 接続（config/database.php 経由）
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/config/database.php';
 
 // 商品ID を GET で取得。パラメータ名は id を想定（product_id でも可）
 $id = null;
