@@ -1,0 +1,73 @@
+/* ------------------------------
+   FitFuel ログイン画面 完全一致版
+   ------------------------------ */
+
+/* 全体 */
+body {
+  background-color: #fff;
+  font-family: "メイリオ", "Hiragino Kaku Gothic Pro", "Yu Gothic", sans-serif;
+  color: #000;
+}
+
+/* ログインボックスの外側（中央寄せ） */
+.login-box {
+  width: 340px;
+  margin: 60px auto;
+  background-color: #eaeaea;
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  padding: 25px 30px;
+}
+
+/* 見出し */
+.login-box h2 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* ラベル */
+.login-box label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* 入力欄 */
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin-top: 4px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+/* エラーメッセージ */
+.login-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+/* ログインボタン */
+.login-box button {
+  width: 100%;
+  height: 40px;
+  background-color: #3b3b45;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #555560;
+}
