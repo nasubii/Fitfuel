@@ -13,7 +13,7 @@
     // DB接続（PDO）を利用する
     // config/database.php に PDO 接続情報がある前提
     $results = [];
-    $dbConfigPath = __DIR__ . '/../config/database.php';
+    $dbConfigPath = __DIR__ . '/config/database.php';
     if (file_exists($dbConfigPath)) {
         require_once $dbConfigPath; // provides $pdo or dies on error
     }
