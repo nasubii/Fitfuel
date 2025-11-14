@@ -1,24 +1,8 @@
 <?php
 session_start();
 
-// DB 接続情報（ローカルで使われている値を踏襲）
-$server = 'mysql326.phy.lolipop.lan';
-$dbname = 'LAA1607731-fitfuel';
-$dbuser = 'LAA1607731';
-$dbpass = '6cK37BWhPZYcXkm';
-
-$dsn = 'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4';
-$pdoOptions = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_EMULATE_PREPARES => false,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-try {
-    $pdo = new PDO($dsn, $dbuser, $dbpass, $pdoOptions);
-} catch (PDOException $e) {
-    // 本番では詳細を出力しない
-    exit('データベース接続に失敗しました。');
-}
+// DB 接続（config/database.php 経由）
+require_once __DIR__ . '/../config/database.php';
 
 // 商品ID を GET で取得。パラメータ名は id を想定（product_id でも可）
 $id = null;
