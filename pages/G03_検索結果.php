@@ -10,51 +10,83 @@
 </head>
 <body>
     <?php
-    // 簡易サンプル商品データ（将来DBに差し替え）
-    $products = [
-        [
-            'id' => 1,
-            'title' => 'ホエイプロテイン カカオ味 1kg',
-            'price' => 2900,
-            'image' => 'refpic/protein.png',
-            'category' => 'プロテイン',
-        ],
-        [
-            'id' => 2,
-            'title' => 'ソイプロテイン ビターショコラ味 1kg',
-            'price' => 2900,
-            'image' => 'refpic/protein.png',
-            'category' => 'プロテイン',
-        ],
-        [
-            'id' => 3,
-            'title' => 'マルチビタミン',
-            'price' => 1200,
-            'image' => 'refpic/vitamin.png',
-            'category' => 'ビタミン',
-
-        ],
-    ];
-
-    // 検索キーワードとカテゴリを取得（GETパラメータ q, category）
-    $q = isset($_GET['q']) ? trim($_GET['q']) : '';
-    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
-
-    // 絞り込み（大文字小文字を区別せず部分一致、カテゴリは完全一致）
+    // DB接続（PDO）を利用する
+    // config/database.php に PDO 接続情報がある前提
     $results = [];
-    foreach ($products as $p) {
-        $matchQ = true;
-        $matchCat = true;
+    $dbConfigPath = __DIR__ . '/../config/database.php';
+    if (file_exists($dbConfigPath)) {
+        require_once $dbConfigPath; // provides $pdo or dies on error
+    }
 
-        if ($q !== '') {
-            $matchQ = (mb_strpos(mb_strtolower($p['title'], 'UTF-8'), mb_strtolower($q, 'UTF-8')) !== false);
-        }
+    if (isset($pdo) && $pdo instanceof PDO) {
+        $sql = "SELECT p.product_id, p.product_name AS title, p.product_price AS price, p.product_image AS image, c.category_name AS category
+                FROM product p
+                JOIN category c ON p.category_id = c.category_id
+                WHERE p.product_status = 1";
+
+        $params = [];
         if ($category !== '') {
-            $matchCat = ($p['category'] === $category);
+            $sql .= ' AND c.category_name = :category';
+            $params[':category'] = $category;
+        }
+        if ($q !== '') {
+            $sql .= ' AND p.product_name LIKE :q';
+            $params[':q'] = '%' . $q . '%';
         }
 
-        if ($matchQ && $matchCat) {
-            $results[] = $p;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows as $row) {
+            $results[] = [
+                'id' => $row['product_id'],
+                'title' => $row['title'],
+                'price' => (int)$row['price'],
+                'image' => $row['image'] ? ($row['image']) : '../refpic/fitfuel_logo.svg',
+                'category' => $row['category'],
+            ];
+        }
+    } else {
+        // DB未接続時のフォールバック
+        error_log('DB未接続: フォールバックのサンプルデータを使用します');
+        $products = [
+            [
+                'id' => 1,
+                'title' => 'ホエイプロテイン カカオ味 1kg',
+                'price' => 2900,
+                'image' => '../refpic/fitfuel_logo.svg',
+                'category' => 'プロテイン',
+            ],
+            [
+                'id' => 2,
+                'title' => 'ソイプロテイン ビターショコラ味 1kg',
+                'price' => 2900,
+                'image' => '../refpic/fitfuel_logo.svg',
+                'category' => 'プロテイン',
+            ],
+            [
+                'id' => 3,
+                'title' => 'マルチビタミン',
+                'price' => 1200,
+                'image' => '../refpic/fitfuel_logo.svg',
+                'category' => 'ビタミン',
+            ],
+        ];
+
+        foreach ($products as $p) {
+            $matchQ = true;
+            $matchCat = true;
+
+            if ($q !== '') {
+                $matchQ = (mb_strpos(mb_strtolower($p['title'], 'UTF-8'), mb_strtolower($q, 'UTF-8')) !== false);
+            }
+            if ($category !== '') {
+                $matchCat = ($p['category'] === $category);
+            }
+
+            if ($matchQ && $matchCat) {
+                $results[] = $p;
+            }
         }
     }
     ?>
