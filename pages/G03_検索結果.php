@@ -18,6 +18,10 @@
         require_once $dbConfigPath; // provides $pdo or dies on error
     }
 
+    // 検索キーワードとカテゴリを取得（GETパラメータ q, category）
+    $q = isset($_GET['q']) ? trim($_GET['q']) : '';
+    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
+
     if (isset($pdo) && $pdo instanceof PDO) {
         $sql = "SELECT p.product_id, p.product_name AS title, p.product_price AS price, p.product_image AS image, c.category_name AS category
                 FROM product p
