@@ -16,7 +16,7 @@
         <div class="header-top">
             <div class="container">
                 <div class="logo">
-                    <a href="../index.php" aria-label="FitFuel ホーム">
+                    <a href="../Fitfuel/index.php" aria-label="FitFuel ホーム">
                         <img src="refpic/fitfuel_logo.png" alt="FitFuel">
                     </a>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="icons">
                     <a class="icon" href="G06-1_ユーザー管理.php" title="マイページ">👤</a>
                     <a class="icon" href="G04_カート一覧.php" title="カート">🛒</a>
-                    <a class="icon" href="G01_ホーム.php" title="ホーム">🏠</a>
+                    <a class="icon" href="index.php" title="ホーム">🏠</a>
                 </div>
             </div>
         </div>
