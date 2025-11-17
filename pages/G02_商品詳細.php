@@ -62,7 +62,7 @@ $images = array_values(array_unique($images));
         <section class="pd-top">
             <div class="pd-image">
                 <?php
-                $img = $product['product_image'] ? 'pimage/' . htmlspecialchars($product['product_image'], ENT_QUOTES, 'UTF-8') : 'refpic/no-image.png';
+                $img = $product['product_image'] ? htmlspecialchars($product['product_image'], ENT_QUOTES, 'UTF-8') : 'refpic/no-image.png';
                 ?>
                 <img src="<?= $img ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?>">
             </div>
@@ -84,7 +84,7 @@ $images = array_values(array_unique($images));
         <?php if (!empty($product['product_nuts_image'])): ?>
             <section class="pd-nutrition">
                 <h2>栄養成分</h2>
-                <img src="eimage/<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="栄養成分表">
+                <img src="<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="栄養成分表">
             </section>
         <?php endif; ?>
     <?php endif; ?>
