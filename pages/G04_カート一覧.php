@@ -65,7 +65,7 @@ $cartCount = array_sum($sessionCart);
 
             <?php if (empty($cartItems)): ?>
                 <p class="empty-text">カートに商品がありません。</p>
-                <a class="primary-btn" href="../index.php">商品を探す</a>
+                <a class="primary-btn" href="index.php">商品を探す</a>
             <?php else: ?>
                 <ul class="cart-list">
                     <?php foreach ($cartItems as $item): ?>
