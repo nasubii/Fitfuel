@@ -21,8 +21,11 @@ $sessionCart = isset($_SESSION['cart']) && is_array($_SESSION['cart']) ? $_SESSI
 $cartData = getCartDetails($pdo, $sessionCart);
 $cartItems = $cartData['items'];
 
+$cartSubtotal = $cartData['total'];
+$shippingFee = $cartSubtotal >= 10000 ? 0 : 600;
+$cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
+
 $errors = [];
-$successMessage = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'complete') {
     if (empty($cartItems)) {
@@ -40,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
     }
 
     if (empty($errors)) {
+        $orderSummary = [
+            'name' => $formData['methods_name'],
+            'total' => $cartTotal,
+            'count' => array_sum(array_map(static fn($item) => (int)$item['quantity'], $cartItems)),
+        ];
+
         try {
             $pdo->beginTransaction();
 
@@ -62,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
                 ':methods_phone' => $formData['methods_phone'] === '' ? null : $formData['methods_phone'],
             ]);
 
-            $updateStockStmt = $pdo->prepare('UPDATE product SET product_stock = product_stock - :qty WHERE product_id = :pid AND product_stock >= :qty');
+            $updateStockStmt = $pdo->prepare('UPDATE product SET product_stock = product_stock - :qty_subtract WHERE product_id = :pid AND product_stock >= :qty_required');
             $insertSalesStmt = $pdo->prepare('INSERT INTO sales (product_id, user_id, sales_sold, sold_at) VALUES (:pid, :uid, :qty, NOW())');
 
             foreach ($cartItems as $item) {
@@ -70,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
                 $qty = max(1, (int)$item['quantity']);
 
                 $updateStockStmt->execute([
-                    ':qty' => $qty,
+                    ':qty_subtract' => $qty,
+                    ':qty_required' => $qty,
                     ':pid' => $pid,
                 ]);
 
@@ -87,15 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
 
             $pdo->commit();
 
-            $successMessage = 'ご注文を受け付けました。後ほど確認メールをお送りします。';
             unset($_SESSION['checkout_form']);
             unset($_SESSION['cart']);
-            $cartItems = [];
-            $sessionCart = [];
-            $cartData = ['items' => [], 'total' => 0];
-            $cartSubtotal = 0;
-            $shippingFee = 0;
-            $cartTotal = 0;
+            $_SESSION['checkout_complete'] = $orderSummary;
+
+            header('Location: G05_購入完了.php');
+            exit();
         } catch (Throwable $e) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
@@ -107,10 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
         }
     }
 }
-
-$cartSubtotal = $cartData['total'];
-$shippingFee = $cartSubtotal >= 10000 ? 0 : 600;
-$cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
 
 $maskedCard = str_repeat('*', max(0, strlen($formData['card_number']) - 4)) . substr($formData['card_number'], -4);
 ?>
@@ -141,62 +144,63 @@ $maskedCard = str_repeat('*', max(0, strlen($formData['card_number']) - 4)) . su
         </div>
     <?php endif; ?>
 
-    <?php if ($successMessage !== ''): ?>
-        <div class="alert alert-success">
-            <?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8'); ?>
-        </div>
-    <?php endif; ?>
 
     <div class="checkout-grid">
         <section class="buyer-info">
             <h2>配送先・お支払い情報</h2>
-            <form method="post" class="buyer-form">
-                <div class="form-group">
-                    <label>お名前</label>
-                    <input type="text" value="<?= htmlspecialchars($formData['methods_name'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
+            <form method="post" class="buyer-form confirmation-form">
+                <div class="confirm-block">
+                    <h3>お届け先</h3>
+                    <dl class="confirm-list">
+                        <div class="confirm-row">
+                            <dt>お名前</dt>
+                            <dd><?= htmlspecialchars($formData['methods_name'], ENT_QUOTES, 'UTF-8'); ?></dd>
+                        </div>
+                        <div class="confirm-row">
+                            <dt>郵便番号</dt>
+                            <dd><?= htmlspecialchars($formData['methods_postal_code'], ENT_QUOTES, 'UTF-8'); ?></dd>
+                        </div>
+                        <div class="confirm-row">
+                            <dt>電話番号</dt>
+                            <dd><?= htmlspecialchars($formData['methods_phone'], ENT_QUOTES, 'UTF-8'); ?></dd>
+                        </div>
+                        <div class="confirm-row">
+                            <dt>住所</dt>
+                            <dd class="multiline"><?= nl2br(htmlspecialchars($formData['methods_address'], ENT_QUOTES, 'UTF-8')); ?></dd>
+                        </div>
+                    </dl>
                 </div>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label>郵便番号</label>
-                        <input type="text" value="<?= htmlspecialchars($formData['methods_postal_code'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>電話番号</label>
-                        <input type="text" value="<?= htmlspecialchars($formData['methods_phone'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
-                    </div>
+
+                <div class="confirm-block">
+                    <h3>お支払い</h3>
+                    <dl class="confirm-list">
+                        <div class="confirm-row">
+                            <dt>お支払い方法</dt>
+                            <dd><span class="payment-label">クレジットカード</span></dd>
+                        </div>
+                    </dl>
                 </div>
-                <div class="form-group">
-                    <label>住所</label>
-                    <textarea rows="3" readonly><?= htmlspecialchars($formData['methods_address'], ENT_QUOTES, 'UTF-8'); ?></textarea>
-                </div>
-                <div class="form-group">
-                    <label>お支払い方法</label>
-                    <p class="payment-label">クレジットカード</p>
-                </div>
-                <div class="card-wrapper">
+
+                <div class="confirm-block">
                     <h3>カード情報</h3>
-                    <div class="form-group">
-                        <label>カード番号</label>
-                        <input type="text" value="<?= htmlspecialchars($maskedCard, ENT_QUOTES, 'UTF-8'); ?>" readonly>
-                    </div>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label>有効期限(月)</label>
-                            <input type="text" value="<?= htmlspecialchars($formData['card_exp_month'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
+                    <dl class="confirm-list">
+                        <div class="confirm-row">
+                            <dt>カード番号</dt>
+                            <dd><?= htmlspecialchars($maskedCard, ENT_QUOTES, 'UTF-8'); ?></dd>
                         </div>
-                        <div class="form-group">
-                            <label>有効期限(年)</label>
-                            <input type="text" value="<?= htmlspecialchars($formData['card_exp_year'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
+                        <div class="confirm-row">
+                            <dt>有効期限</dt>
+                            <dd><?= htmlspecialchars($formData['card_exp_month'], ENT_QUOTES, 'UTF-8'); ?> / <?= htmlspecialchars($formData['card_exp_year'], ENT_QUOTES, 'UTF-8'); ?></dd>
                         </div>
-                        <div class="form-group">
-                            <label>セキュリティコード</label>
-                            <input type="text" value="***" readonly>
+                        <div class="confirm-row">
+                            <dt>セキュリティコード</dt>
+                            <dd>***</dd>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>カード名義人</label>
-                        <input type="text" value="<?= htmlspecialchars($formData['card_holder'], ENT_QUOTES, 'UTF-8'); ?>" readonly>
-                    </div>
+                        <div class="confirm-row">
+                            <dt>名義人</dt>
+                            <dd><?= htmlspecialchars($formData['card_holder'], ENT_QUOTES, 'UTF-8'); ?></dd>
+                        </div>
+                    </dl>
                 </div>
 
                 <div class="confirm-buttons">

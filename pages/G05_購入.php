@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'config/database.php';
+require_once '../config/database.php';
 require_once __DIR__ . '/helpers/cart.php';
 
 if (!isset($_SESSION['customer'])) {
@@ -148,11 +148,11 @@ $cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
                     <div class="form-inline">
                         <div class="form-group">
                             <label for="methods_postal_code">郵便番号<span class="required">必須</span></label>
-                            <input type="text" id="methods_postal_code" name="methods_postal_code" value="<?= htmlspecialchars($formData['methods_postal_code'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="123-4567" required>
+                            <input type="text" id="methods_postal_code" name="methods_postal_code" value="<?= htmlspecialchars($formData['methods_postal_code'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="123-4567" maxlength="8" required>
                         </div>
                         <div class="form-group">
                             <label for="methods_phone">電話番号</label>
-                            <input type="text" id="methods_phone" name="methods_phone" value="<?= htmlspecialchars($formData['methods_phone'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="090-1234-5678">
+                            <input type="text" id="methods_phone" name="methods_phone" value="<?= htmlspecialchars($formData['methods_phone'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="090-1234-5678" maxlength="15">
                         </div>
                     </div>
 
@@ -170,20 +170,20 @@ $cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
                         <h3>カード情報</h3>
                         <div class="form-group">
                             <label for="card_number">カード番号<span class="required">必須</span></label>
-                            <input type="text" id="card_number" name="card_number" inputmode="numeric" placeholder="1234 5678 9012 3456" value="<?= htmlspecialchars($formData['card_number'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <input type="text" id="card_number" name="card_number" inputmode="numeric" placeholder="1234 5678 9012 3456" minlength="13" maxlength="16" value="<?= htmlspecialchars($formData['card_number'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
                                 <label for="card_exp_month">有効期限(月)<span class="required">必須</span></label>
-                                <input type="text" id="card_exp_month" name="card_exp_month" placeholder="MM" value="<?= htmlspecialchars($formData['card_exp_month'], ENT_QUOTES, 'UTF-8'); ?>">
+                                <input type="text" id="card_exp_month" name="card_exp_month" placeholder="MM" maxlength="2" value="<?= htmlspecialchars($formData['card_exp_month'], ENT_QUOTES, 'UTF-8'); ?>">
                             </div>
                             <div class="form-group">
                                 <label for="card_exp_year">有効期限(年)<span class="required">必須</span></label>
-                                <input type="text" id="card_exp_year" name="card_exp_year" placeholder="YY" value="<?= htmlspecialchars($formData['card_exp_year'], ENT_QUOTES, 'UTF-8'); ?>">
+                                <input type="text" id="card_exp_year" name="card_exp_year" placeholder="YY" maxlength="2" value="<?= htmlspecialchars($formData['card_exp_year'], ENT_QUOTES, 'UTF-8'); ?>">
                             </div>
                             <div class="form-group">
                                 <label for="card_cvv">セキュリティコード<span class="required">必須</span></label>
-                                <input type="text" id="card_cvv" name="card_cvv" placeholder="123" value="<?= htmlspecialchars($formData['card_cvv'], ENT_QUOTES, 'UTF-8'); ?>">
+                                <input type="text" id="card_cvv" name="card_cvv" placeholder="123" maxlength="4" value="<?= htmlspecialchars($formData['card_cvv'], ENT_QUOTES, 'UTF-8'); ?>">
                             </div>
                         </div>
                         <div class="form-group">

@@ -16,6 +16,10 @@ main.checkout-wrapper {
     margin-bottom: 30px;
 }
 
+.confirmation-form {
+    gap: 24px;
+}
+
 .checkout-title h1 {
     font-size: 2.4rem;
     margin-bottom: 10px;
@@ -90,6 +94,11 @@ main.checkout-wrapper {
 
 label {
     font-weight: 600;
+
+    .confirm-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
     color: #2f3d4c;
 }
 
@@ -104,6 +113,10 @@ label {
 
 .payment-label {
     font-weight: 700;
+
+    .confirm-block {
+        padding: 16px;
+    }
     color: #1f2937;
     background: #e5f5f1;
     display: inline-block;
