@@ -104,16 +104,18 @@
                     <div class="no-results">該当する商品は見つかりませんでした。</div>
                 <?php else: ?>
                     <?php foreach ($results as $p): ?>
-                        <article class="card">
-                            <div class="card-image">
-                                <img src="<?php echo htmlspecialchars($p['image'], ENT_QUOTES); ?>" alt="商品画像">
-                            </div>
-                            <div class="card-body">
-                                <h2 class="product-title"><?php echo htmlspecialchars($p['title'], ENT_QUOTES); ?></h2>
-                                <div class="price">¥<?php echo number_format($p['price']); ?></div>
-                                <button class="buy">購入</button>
-                            </div>
-                        </article>
+                        <a class="card-link" href="G02_商品詳細.php?id=<?php echo htmlspecialchars($p['id'], ENT_QUOTES); ?>">
+                            <article class="card">
+                                <div class="card-image">
+                                    <img src="<?php echo htmlspecialchars($p['image'], ENT_QUOTES); ?>" alt="<?php echo htmlspecialchars($p['title'], ENT_QUOTES); ?>">
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="product-title"><?php echo htmlspecialchars($p['title'], ENT_QUOTES); ?></h2>
+                                    <div class="category-label"><?php echo htmlspecialchars($p['category'], ENT_QUOTES); ?></div>
+                                    <div class="price">¥<?php echo number_format($p['price']); ?></div>
+                                </div>
+                            </article>
+                        </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>

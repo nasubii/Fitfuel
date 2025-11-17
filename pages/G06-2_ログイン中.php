@@ -9,7 +9,7 @@
     <form action="G08_ログアウト.php" method="post">
       <button type="submit" class="logout-btn">ログアウト</button>
     </form>
-    <a href="G01_ホーム.php">トップへ戻る</a>
+    <a href="index.php">トップへ戻る</a>
   <?php else: ?>
     <p>ログイン情報が確認できません。</p>
     <a href="G08_ログイン.php">ログイン画面へ戻る</a>
