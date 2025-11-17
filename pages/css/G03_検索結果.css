@@ -4,17 +4,22 @@ body{font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;backg
 .search-results-page{max-width:1200px;margin:20px auto;padding:0 16px}
 .results-panel{background:#fff;border:1px solid #ddd;border-radius:8px;padding:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04)}
 .results-title{font-size:22px;margin:0 0 12px;padding:6px 8px;border-radius:6px}
-.cards{display:flex;gap:18px}
-.card{width:180px;background:#fff;border:2px solid #e6e6e6;border-radius:18px;padding:12px;box-shadow:0 2px 4px rgba(0,0,0,0.03)}
+.cards{display:flex;gap:18px;flex-wrap:wrap}
+.card-link{text-decoration:none;flex:1 1 200px;min-width:200px;}
+.card{width:100%;background:#fff;border-radius:22px;padding:16px;border:1px solid #e0f3e9;box-shadow:0 14px 30px rgba(15, 138, 102, 0.1);transition:transform 0.25s ease, box-shadow 0.25s ease;display:flex;flex-direction:column;gap:14px}
+.card-link:hover .card,.card-link:focus .card{transform:translateY(-6px);box-shadow:0 24px 40px rgba(15, 138, 102, 0.25)}
 .card-image{height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
 .card-image img{max-height:100%;max-width:100%;border-radius:8px}
 .card-body{text-align:center}
-.product-title{font-size:13px;margin:6px 0;color:#333;height:36px;overflow:hidden}
-.price{background:#dff6ea;color:#017a5a;display:inline-block;padding:6px 10px;border-radius:6px;font-weight:700;margin:8px 0}
-.buy{display:inline-block;background:#26a7c0;color:#fff;border:0;padding:8px 18px;border-radius:6px;cursor:pointer}
+.product-title{font-size:16px;margin:6px 0;color:#0f3b29;height:54px;overflow:hidden;line-height:1.4}
+.category-label{font-size:0.8rem;color:#4c9a82;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.price{background:#0f8964;color:#fff;display:inline-block;padding:8px 16px;border-radius:999px;font-weight:700;margin:8px 0}
 
 /* レスポンシブ */
-@media (max-width:680px){
-	.cards{flex-wrap:wrap;justify-content:flex-start}
-	.card{width:45%;margin-bottom:12px}
+@media (max-width:960px){
+	.card-image{height:140px}
+}
+@media (max-width:720px){
+	.cards{justify-content:center}
+	.card-link{min-width:unset;flex:1 1 280px}
 }

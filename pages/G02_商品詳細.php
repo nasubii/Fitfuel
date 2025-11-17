@@ -17,11 +17,11 @@ if ($id === null || !ctype_digit((string)$id)) {
     $error = '不正な商品指定です。';
     $product = null;
 } else {
-    // DBから商品情報を取得
-    $sql = 'SELECT p.product_id, p.product_name, p.product_price, p.product_image, p.product_nuts_image, p.product_stock, p.product_status, c.category_name
-            FROM `product` p
-            LEFT JOIN `category` c ON p.category_id = c.category_id
-            WHERE p.product_id = :id LIMIT 1';
+        // DBから商品情報を取得
+        $sql = 'SELECT p.product_id, p.product_name, p.product_price, p.product_image, p.product_image2, p.product_nuts_image, p.product_stock, p.product_status, c.category_name
+                FROM `product` p
+                LEFT JOIN `category` c ON p.category_id = c.category_id
+                WHERE p.product_id = :id LIMIT 1';
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
     $stmt->execute();
@@ -34,6 +34,15 @@ if ($id === null || !ctype_digit((string)$id)) {
         $error = null;
     }
 }
+
+$images = [];
+if (!empty($product['product_image'])) {
+    $images[] = $product['product_image'];
+}
+if (!empty($product['product_image2'])) {
+    $images[] = $product['product_image2'];
+}
+$images = array_values(array_unique($images));
 ?>
 <!DOCTYPE html>
 <html lang="ja">
