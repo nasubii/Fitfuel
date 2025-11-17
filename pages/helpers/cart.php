@@ -3,7 +3,7 @@
  * セッションカートを共通形式に変換して返す
  * カートは product_id => quantity 形式を想定
  * 戻り値: [
- *   'items' => [ [ 'product_id' => int, 'product_name' => string, 'product_price' => int, 'product_image' => string|null, 'quantity' => int, 'subtotal' => int ]...],
+ *   'items' => [ [ 'product_id' => int, 'product_name' => string, 'product_price' => int, 'product_image' => string|null, 'product_stock' => int, 'quantity' => int, 'subtotal' => int ]...],
  *   'total' => int
  * ]
  */
@@ -18,7 +18,7 @@ function getCartDetails(PDO $pdo, array $sessionCart): array
 
     $ids = array_map('intval', array_keys($sessionCart));
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
-    $stmt = $pdo->prepare("SELECT product_id, product_name, product_price, product_image FROM product WHERE product_id IN ($placeholders)");
+    $stmt = $pdo->prepare("SELECT product_id, product_name, product_price, product_image, product_stock FROM product WHERE product_id IN ($placeholders)");
     $stmt->execute($ids);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -32,6 +32,7 @@ function getCartDetails(PDO $pdo, array $sessionCart): array
             'product_name' => $row['product_name'],
             'product_price' => $price,
             'product_image' => $row['product_image'],
+            'product_stock' => (int)$row['product_stock'],
             'quantity' => $qty,
             'subtotal' => $subtotal,
         ];

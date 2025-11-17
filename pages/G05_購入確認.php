@@ -30,7 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
     }
 
     if (empty($errors)) {
+        foreach ($cartItems as $item) {
+            $available = isset($item['product_stock']) ? (int)$item['product_stock'] : null;
+            $qty = max(1, (int)$item['quantity']);
+            if ($available !== null && $available < $qty) {
+                $errors[] = sprintf('%sの在庫が足りません。(在庫: %d)', $item['product_name'], $available);
+            }
+        }
+    }
+
+    if (empty($errors)) {
         try {
+            $pdo->beginTransaction();
+
             $sql = 'INSERT INTO methods (user_id, methods_name, methods_address, methods_postal_code, methods_payment, methods_phone)
                     VALUES (:user_id, :methods_name, :methods_address, :methods_postal_code, :methods_payment, :methods_phone)
                     ON DUPLICATE KEY UPDATE
@@ -50,11 +62,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'compl
                 ':methods_phone' => $formData['methods_phone'] === '' ? null : $formData['methods_phone'],
             ]);
 
+            $updateStockStmt = $pdo->prepare('UPDATE product SET product_stock = product_stock - :qty WHERE product_id = :pid AND product_stock >= :qty');
+            $insertSalesStmt = $pdo->prepare('INSERT INTO sales (product_id, user_id, sales_sold, sold_at) VALUES (:pid, :uid, :qty, NOW())');
+
+            foreach ($cartItems as $item) {
+                $pid = (int)$item['product_id'];
+                $qty = max(1, (int)$item['quantity']);
+
+                $updateStockStmt->execute([
+                    ':qty' => $qty,
+                    ':pid' => $pid,
+                ]);
+
+                if ($updateStockStmt->rowCount() === 0) {
+                    throw new RuntimeException('在庫が不足しています: ' . $item['product_name']);
+                }
+
+                $insertSalesStmt->execute([
+                    ':pid' => $pid,
+                    ':uid' => $userId,
+                    ':qty' => $qty,
+                ]);
+            }
+
+            $pdo->commit();
+
             $successMessage = 'ご注文を受け付けました。後ほど確認メールをお送りします。';
             unset($_SESSION['checkout_form']);
-        } catch (PDOException $e) {
-            error_log('Failed to save methods info: ' . $e->getMessage());
-            $errors[] = '注文の登録に失敗しました。時間をおいて再度お試しください。';
+            unset($_SESSION['cart']);
+            $cartItems = [];
+            $sessionCart = [];
+            $cartData = ['items' => [], 'total' => 0];
+            $cartSubtotal = 0;
+            $shippingFee = 0;
+            $cartTotal = 0;
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            error_log('Checkout error: ' . $e->getMessage());
+            $errors[] = (strpos($e->getMessage(), '在庫') !== false)
+                ? $e->getMessage()
+                : '注文の登録に失敗しました。時間をおいて再度お試しください。';
         }
     }
 }
