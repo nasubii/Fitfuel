@@ -54,43 +54,164 @@ $images = array_values(array_unique($images));
 </head>
 <body>
 <?php require 'G00_ヘッダー.php'; ?>
-
 <main class="product-detail">
     <?php if (!empty($error)): ?>
         <div class="error-box"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
     <?php else: ?>
-        <section class="pd-top">
-            <div class="pd-image">
-                <?php
-                $img = $product['product_image'] ? htmlspecialchars($product['product_image'], ENT_QUOTES, 'UTF-8') : 'refpic/no-image.png';
-                ?>
-                <img src="<?= $img ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?>">
-            </div>
-            <div class="pd-info">
-                <h1 class="pd-title"><?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?></h1>
-                <div class="pd-price">¥<?= number_format((int)$product['product_price']) ?></div>
-                <div class="pd-stock">在庫: <?= (int)$product['product_stock'] ?></div>
+        <div class="pd-layout">
+            <article class="pd-card pd-card-visual">
+                <div class="pd-carousel" data-images="<?= htmlspecialchars(json_encode($images), ENT_QUOTES, 'UTF-8') ?>">
+                    <div class="pd-carousel-inner">
+                        <?php $defaultImage = !empty($images[0]) ? $images[0] : 'refpic/no-image.png'; ?>
+                        <img src="<?= htmlspecialchars($defaultImage, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?>">
+                    </div>
+                    <?php if (count($images) > 1): ?>
+                        <button type="button" class="carousel-arrow prev" aria-label="前の画像">&lsaquo;</button>
+                        <button type="button" class="carousel-arrow next" aria-label="次の画像">&rsaquo;</button>
+                    <?php endif; ?>
+                </div>
+                <div class="pd-carousel-info">
+                    <span>選ばれる理由 No.1</span>
+                    <h1><?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?></h1>
+                    <p>カテゴリ: <?= htmlspecialchars($product['category_name'] ?? 'その他', ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+            </article>
 
+            <article class="pd-card pd-card-meta">
+                <div class="pd-card-head">
+                    <div class="pd-card-title">
+                        <h2><?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?></h2>
+                        <span>1kg</span>
+                    </div>
+                    <div class="pd-card-price">¥<?= number_format((int)$product['product_price']) ?></div>
+                </div>
+                <div class="pd-card-stock">在庫：<?= (int)$product['product_stock'] ?>個</div>
                 <form action="G04_カート一覧.php" method="post" class="pd-cart-form">
                     <input type="hidden" name="product_id" value="<?= (int)$product['product_id'] ?>">
-                    <label>数量
+                    <label class="pd-quantity-label">
+                        数量
                         <input type="number" name="quantity" value="1" min="1" max="<?= (int)$product['product_stock'] ?>">
                     </label>
                     <button type="submit" class="add-cart">カートに入れる</button>
                 </form>
+            </article>
+        </div>
+
+        <section class="pd-nutrition">
+            <div class="pd-nutrition-card">
+                <div class="pd-nutrition-head">
+                    <h2>栄養成分</h2>
+                    <p>最新のデータを画像でご覧いただけます。</p>
+                </div>
+                <?php if (!empty($product['product_nuts_image'])): ?>
+                    <div class="pd-nutrition-image">
+                        <img src="eimage/<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?> の栄養成分表">
+                    </div>
+                <?php else: ?>
+                    <p class="pd-muted">栄養成分画像は準備中です。</p>
+                <?php endif; ?>
+                <div class="pd-nutrition-table">
+                    <div class="pd-nutrition-row">
+                        <span>100gあたり</span>
+                        <span>一食あたり</span>
+                    </div>
+                    <div class="pd-nutrition-row">
+                        <span>エネルギー</span>
+                        <strong>401kcal</strong>
+                        <strong>123kcal</strong>
+                    </div>
+                    <div class="pd-nutrition-row">
+                        <span>脂質</span>
+                        <strong>7.3g</strong>
+                        <strong>2.2g</strong>
+                    </div>
+                    <div class="pd-nutrition-row">
+                        <span>炭水化物</span>
+                        <strong>7.1g</strong>
+                        <strong>2.1g</strong>
+                    </div>
+                    <div class="pd-nutrition-row">
+                        <span>タンパク質</span>
+                        <strong>81g</strong>
+                        <strong>24g</strong>
+                    </div>
+                    <div class="pd-nutrition-row">
+                        <span>食塩相当量</span>
+                        <strong>0.5g</strong>
+                        <strong>0.15g</strong>
+                    </div>
+                </div>
             </div>
         </section>
-
-        <?php if (!empty($product['product_nuts_image'])): ?>
-            <section class="pd-nutrition">
-                <h2>栄養成分</h2>
-                <img src="<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="栄養成分表">
-            </section>
-        <?php endif; ?>
     <?php endif; ?>
 </main>
 
-<?php require 'G00_フッター.php'; ?>
+<?php if (empty($error)): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.pd-carousel');
+    if (!carousel) {
+        return;
+    }
+    const images = JSON.parse(carousel.getAttribute('data-images') || '[]');
+    if (images.length <= 1) {
+        return;
+    }
+    const inner = carousel.querySelector('.pd-carousel-inner img');
+    const prevBtn = carousel.querySelector('.carousel-arrow.prev');
+    const nextBtn = carousel.querySelector('.carousel-arrow.next');
+    let current = 0;
+    let timer = null;
 
+    const fadeToImage = (src) => {
+        inner.style.opacity = '0';
+        setTimeout(() => {
+            inner.src = src;
+            inner.style.opacity = '1';
+        }, 220);
+    };
+
+    const showImage = (index) => {
+        current = (index + images.length) % images.length;
+        fadeToImage(images[current]);
+    };
+
+    const nextImage = () => showImage(current + 1);
+    const prevImage = () => showImage(current - 1);
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextImage();
+            resetTimer();
+        });
+    }
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevImage();
+            resetTimer();
+        });
+    }
+
+    const startTimer = () => {
+        timer = setInterval(nextImage, 5000);
+    };
+    const resetTimer = () => {
+        if (timer) {
+            clearInterval(timer);
+        }
+        startTimer();
+    };
+
+    carousel.addEventListener('mouseenter', () => {
+        if (timer) {
+            clearInterval(timer);
+        }
+    });
+    carousel.addEventListener('mouseleave', () => startTimer());
+
+    startTimer();
+});
+</script>
+<?php endif; ?>
 </body>
 </html>
