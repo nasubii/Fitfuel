@@ -183,5 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <?php endif; ?>
+<?php require 'G00_フッター.php'; ?>
 </body>
 </html>
