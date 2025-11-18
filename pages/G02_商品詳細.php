@@ -105,42 +105,12 @@ $images = array_values(array_unique($images));
                 </div>
                 <?php if (!empty($product['product_nuts_image'])): ?>
                     <div class="pd-nutrition-image">
-                        <img src="eimage/<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?> の栄養成分表">
+                        <img src="<?= htmlspecialchars($product['product_nuts_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?> の栄養成分表">
                     </div>
                 <?php else: ?>
                     <p class="pd-muted">栄養成分画像は準備中です。</p>
                 <?php endif; ?>
-                <div class="pd-nutrition-table">
-                    <div class="pd-nutrition-row">
-                        <span>100gあたり</span>
-                        <span>一食あたり</span>
-                    </div>
-                    <div class="pd-nutrition-row">
-                        <span>エネルギー</span>
-                        <strong>401kcal</strong>
-                        <strong>123kcal</strong>
-                    </div>
-                    <div class="pd-nutrition-row">
-                        <span>脂質</span>
-                        <strong>7.3g</strong>
-                        <strong>2.2g</strong>
-                    </div>
-                    <div class="pd-nutrition-row">
-                        <span>炭水化物</span>
-                        <strong>7.1g</strong>
-                        <strong>2.1g</strong>
-                    </div>
-                    <div class="pd-nutrition-row">
-                        <span>タンパク質</span>
-                        <strong>81g</strong>
-                        <strong>24g</strong>
-                    </div>
-                    <div class="pd-nutrition-row">
-                        <span>食塩相当量</span>
-                        <strong>0.5g</strong>
-                        <strong>0.15g</strong>
-                    </div>
-                </div>
+                
             </div>
         </section>
     <?php endif; ?>
