@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
     <link href="css/G03_検索結果.css" rel="stylesheet" type="text/css">
     <?php require_once 'G00_ヘッダー.php'; ?>
     <title>検索結果</title>
