@@ -5,7 +5,7 @@ body { font-family: "Hiragino Kaku Gothic ProN", Meiryo, "Yu Gothic", sans-serif
 .pd-layout { display: flex; gap: 36px; flex-wrap: wrap; margin-bottom: 52px; }
 .pd-card { background: #fff; border-radius: 24px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08); padding: 24px; }
 .pd-card-visual { position: relative; flex: 2 1 560px; min-width: 360px; }
-.pd-card-meta { flex: 1 1 280px; }
+.pd-card-meta { flex: 1 1 360px; max-width: 380px; }
 .pd-carousel { position: relative; overflow: hidden; border-radius: 20px; }
 .pd-carousel-inner img { width: 100%; height: 480px; object-fit: cover; display: block; transition: opacity 0.6s ease; }
 .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.95); border: none; font-size: 1.9rem; width: 56px; height: 56px; border-radius: 50%; cursor: pointer; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); }
@@ -17,7 +17,8 @@ body { font-family: "Hiragino Kaku Gothic ProN", Meiryo, "Yu Gothic", sans-serif
 .pd-carousel-info p { margin: 0; color: #555; }
 .pd-card-meta { display: flex; flex-direction: column; gap: 18px; }
 .pd-card-head { display: flex; justify-content: space-between; align-items: flex-end; }
-.pd-card-title h2 { margin: 0; font-size: 1.6rem; }
+.pd-card-title h2 { margin: 0; font-size: 1.5rem; line-height: 1.4; word-break: keep-all; }
+.pd-card-title span { letter-spacing: 0.04em; }
 .pd-card-title span { display: block; font-size: 0.85rem; color: #999; }
 .pd-card-price { font-size: 2.3rem; color: #1e6f4c; font-weight: bold; }
 .pd-card-stock { color: #666; }
