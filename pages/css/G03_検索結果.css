@@ -18,17 +18,17 @@ body{font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;backg
 /* レスポンシブ */
 .cards{max-width:800px;margin:0 auto;}
 @media (max-width:1000px){
+	.cards{grid-template-columns:repeat(7,minmax(0,1fr));}
+}
+@media (max-width:800px){
+	.cards{grid-template-columns:repeat(6,minmax(0,1fr));}
+}
+@media (max-width:800px){
 	.cards{grid-template-columns:repeat(5,minmax(0,1fr));}
 }
-@media (max-width:800px){
+@media (max-width:600px){
 	.cards{grid-template-columns:repeat(4,minmax(0,1fr));}
 }
-@media (max-width:800px){
-	.cards{grid-template-columns:repeat(3,minmax(0,1fr));}
-}
-@media (max-width:600px){
-	.cards{grid-template-columns:repeat(2,minmax(0,1fr));}
-}
 @media (max-width:400px){
-	.cards{grid-template-columns:repeat(1,minmax(0,1fr));}
+	.cards{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
