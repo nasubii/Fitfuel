@@ -8,27 +8,26 @@ body{font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;backg
 .card-link{text-decoration:none;display:block;}
 .card{width:100%;background:#fff;border-radius:18px;padding:12px;border:1px solid #e0f3e9;box-shadow:0 12px 26px rgba(15, 138, 102, 0.08);transition:transform 0.2s ease, box-shadow 0.2s ease;display:flex;flex-direction:column;gap:10px}
 .card-link:hover .card,.card-link:focus .card{transform:translateY(-6px);box-shadow:0 24px 40px rgba(15, 138, 102, 0.25)}
-.card-image{width:100%;aspect-ratio:4/3;position:relative;margin-bottom:8px;border-radius:14px;overflow:hidden;background:#f0f0f0}
-.card-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
+.card-image{width:100%;aspect-ratio:4/3;position:relative;margin-bottom:8px;border-radius:14px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;padding:12px}
+.card-image img{width:115%;height:115%;max-width:none;max-height:none;object-fit:contain;object-position:center;}
 .card-body{text-align:center}
 .product-title{font-size:16px;margin:6px 0;color:#0f3b29;height:54px;overflow:hidden;line-height:1.4}
 .category-label{font-size:0.8rem;color:#4c9a82;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
 .price{background:#0f8964;color:#fff;display:inline-block;padding:8px 16px;border-radius:999px;font-weight:700;margin:8px 0}
 
 /* レスポンシブ */
-.cards{max-width:800px;margin:0 auto;}
-@media (max-width:1000px){
-	.cards{grid-template-columns:repeat(7,minmax(0,1fr));}
-}
-@media (max-width:800px){
-	.cards{grid-template-columns:repeat(6,minmax(0,1fr));}
-}
-@media (max-width:800px){
+@media (max-width:1280px){
 	.cards{grid-template-columns:repeat(5,minmax(0,1fr));}
 }
-@media (max-width:600px){
+@media (max-width:1080px){
 	.cards{grid-template-columns:repeat(4,minmax(0,1fr));}
 }
-@media (max-width:400px){
+@media (max-width:880px){
 	.cards{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media (max-width:640px){
+	.cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:420px){
+	.cards{grid-template-columns:repeat(1,minmax(0,1fr));}
 }
