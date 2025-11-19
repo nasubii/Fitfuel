@@ -25,7 +25,7 @@ body { font-family: "Hiragino Kaku Gothic ProN", Meiryo, "Yu Gothic", sans-serif
 .pd-cart-form { display: flex; align-items: center; gap: 12px; }
 .pd-quantity-label { font-weight: 600; display: flex; flex-direction: column; font-size: 0.95rem; color: #444; }
 .pd-quantity-label input { width: 90px; padding: 8px; margin-top: 8px; border: 1px solid #ccc; border-radius: 8px; }
-.add-cart { background: #1f8970; color: #fff; border: none; border-radius: 12px; padding: 14px 26px; font-size: 1rem; cursor: pointer; outline: none; box-shadow: 0 8px 16px rgba(31, 137, 112, 0.3); }
+.add-cart { background: #1f8970; color: #fff; border: none; border-radius: 12px; padding: 14px 26px; font-size: 1rem; cursor: pointer; outline: none; box-shadow: 0 8px 16px rgba(31, 137, 112, 0.3);margin-top: 24px; }
 .pd-card-actions { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
 .pd-link { color: #1f8970; text-decoration: none; }
 .pd-rating { background: #f0f9f5; color: #1f8970; padding: 6px 14px; border-radius: 10px; }
