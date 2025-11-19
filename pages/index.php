@@ -52,14 +52,14 @@ try {
                     <p class="hero-subtext">ジム帰りにも嬉しい、栄養バランスにこだわったプロテインをお届けします。</p>
                 </div>
             </div>
-            <div class="hero-slide" style="background-image:url('pimage/森プロテイン.jpeg');">
+            <div class="hero-slide" style="background-image:url('pimage/森プロテイン1.jpeg');">
                 <div class="hero-content">
                     <p class="hero-label">NEW ARRIVAL</p>
                     <h1 class="hero-text">新商品「森薫る抹茶味」登場！</h1>
                     <p class="hero-subtext">森の香りと抹茶の深みを閉じ込めた、贅沢な一杯でリラックス。</p>
                 </div>
             </div>
-            <div class="hero-slide" style="background-image:url('pimage/紫プロテイン.jpeg');">
+            <div class="hero-slide" style="background-image:url('pimage/紫プロテイン1.jpeg');">
                 <div class="hero-content">
                     <p class="hero-label">BEGINNER'S PICK</p>
                     <h1 class="hero-text">初心者におすすめ<br>ホエイプロテイン</h1>
