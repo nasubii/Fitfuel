@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
     <style>
-        /* フォールバック: 外部CSSが読み込まれない場合でもヘッダーを固定する */
-        .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%}
+        /* フォールバック: 外部CSSが読み込まれない場合でもヘッダーを固定し中央揃え */
+        .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%;display:flex;flex-direction:column;align-items:center}
+        .site-header > *{width:100%;display:flex;justify-content:center}
         body{padding-top:72px}
     </style>
     <title>ヘッダー</title>
