@@ -2,10 +2,11 @@
 *{box-sizing:border-box}
 body{font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif}
 .site-header{border-bottom:4px solid #bfeee6}
-.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%;}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%;display:flex;flex-direction:column;align-items:center}
+.site-header > *{width:100%;display:flex;justify-content:center}
 .site-header .header-top{--header-top-height:72px}
 .header-top{background:#fff;position:relative;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-.container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+.container{width:100%;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:2px 25px}
 .logo a{display:inline-block}
 .logo img{height:40px;display:block;max-width:240px}
 
@@ -21,7 +22,7 @@ body{font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif}
 .icons .icon{font-size:20px;text-decoration:none;color:#333}
 
 .category-nav{background:#e6f9f5;border-top:3px solid #83d6c4}
-.category-nav .nav-inner{display:flex;justify-content:center;gap:48px;padding:10px 0}
+.category-nav .nav-inner{display:flex;justify-content:center;gap:48px;padding:5px 20px}
 .category-nav a{color:#0b8f79;text-decoration:none;font-weight:600}
 
 /* 本文がヘッダーと重ならないよう、JSで動的に padding-top を設定します。

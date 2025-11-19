@@ -44,9 +44,30 @@ try {
 <body>
     <!-- メインバナーセクション -->
     <section class="hero-banner">
-        <div class="hero-content">
-            <h1 class="hero-text">あなたの体作りを<br>飲食からサポート</h1>
-            
+        <div class="hero-carousel" data-interval="6000">
+            <div class="hero-slide active" style="background-image:url('refpic/banner.png');">
+                <div class="hero-content">
+                    <p class="hero-label">FitFuel Picks</p>
+                    <h1 class="hero-text">あなたの体作りを<br>飲食からサポート</h1>
+                    <p class="hero-subtext">ジム帰りにも嬉しい、栄養バランスにこだわったプロテインをお届けします。</p>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image:url('pimage/森プロテイン.jpeg');">
+                <div class="hero-content">
+                    <p class="hero-label">NEW ARRIVAL</p>
+                    <h1 class="hero-text">新商品「森薫る抹茶味」登場！</h1>
+                    <p class="hero-subtext">森の香りと抹茶の深みを閉じ込めた、贅沢な一杯でリラックス。</p>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image:url('pimage/紫プロテイン.jpeg');">
+                <div class="hero-content">
+                    <p class="hero-label">BEGINNER'S PICK</p>
+                    <h1 class="hero-text">初心者におすすめ<br>ホエイプロテイン</h1>
+                    <p class="hero-subtext">毎日の習慣をサポート。飲みやすさと溶けやすさにこだわりました。</p>
+                </div>
+            </div>
+            <button type="button" class="hero-arrow prev" aria-label="前のスライド">&lsaquo;</button>
+            <button type="button" class="hero-arrow next" aria-label="次のスライド">&rsaquo;</button>
         </div>
     </section>
 
@@ -108,6 +129,65 @@ try {
     </section>
 
     <!-- カテゴリーセクション -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const carousel = document.querySelector('.hero-carousel');
+        if(!carousel){
+            return;
+        }
+        const slides = Array.from(carousel.querySelectorAll('.hero-slide'));
+        if(slides.length <= 1){
+            return;
+        }
+
+        const prevBtn = carousel.querySelector('.hero-arrow.prev');
+        const nextBtn = carousel.querySelector('.hero-arrow.next');
+        const interval = parseInt(carousel.dataset.interval, 10) || 7000;
+        let current = 0;
+        let timer = null;
+
+        const activateSlide = (index) => {
+            slides[current].classList.remove('active');
+            current = (index + slides.length) % slides.length;
+            slides[current].classList.add('active');
+        };
+
+        const startTimer = () => {
+            timer = setInterval(() => activateSlide(current + 1), interval);
+        };
+
+        const resetTimer = () => {
+            if(timer){
+                clearInterval(timer);
+            }
+            startTimer();
+        };
+
+        if(prevBtn){
+            prevBtn.addEventListener('click', () => {
+                activateSlide(current - 1);
+                resetTimer();
+            });
+        }
+        if(nextBtn){
+            nextBtn.addEventListener('click', () => {
+                activateSlide(current + 1);
+                resetTimer();
+            });
+        }
+
+        carousel.addEventListener('mouseenter', () => {
+            if(timer){
+                clearInterval(timer);
+            }
+        });
+
+        carousel.addEventListener('mouseleave', () => resetTimer());
+
+        startTimer();
+    });
+    </script>
 
     <?php require 'G00_フッター.php'; ?>
 </body>
