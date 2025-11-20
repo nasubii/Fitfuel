@@ -90,7 +90,7 @@ $images = array_values(array_unique($images));
                     <input type="hidden" name="product_id" value="<?= (int)$product['product_id'] ?>">
                     <label class="pd-quantity-label">
                         数量
-                        <input type="number" name="quantity" value="1" min="1" max="<?= (int)$product['product_stock'] ?>">
+                        <input type="number" name="quantity" value="1" min="1" max="10" required>
                     </label>
                     <button type="submit" class="add-cart">カートに入れる</button>
                 </form>
