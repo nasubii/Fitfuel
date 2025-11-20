@@ -2,8 +2,16 @@
 session_start();
 
 $products = [];
-$categoryOptions = [];
-$categoryFilter = isset($_GET['category']) ? trim($_GET['category']) : '';
+$sortKey = isset($_GET['sort']) ? $_GET['sort'] : 'popular';
+$validSorts = ['popular','name','price'];
+$sortLabels = [
+	'popular' => '人気順',
+	'name' => '商品名順 (A→Z)',
+	'price' => '価格が安い順',
+];
+if (!in_array($sortKey, $validSorts, true)) {
+	$sortKey = 'popular';
+}
 $errorMessage = '';
 
 $dbConfigPath = __DIR__ . '/config/database.php';
@@ -12,34 +20,33 @@ if (file_exists($dbConfigPath)) {
 }
 
 if (isset($pdo) && $pdo instanceof PDO) {
-	try {
-		$categoryStmt = $pdo->query('SELECT category_name FROM category ORDER BY category_id');
-		$categoryOptions = $categoryStmt->fetchAll(PDO::FETCH_COLUMN);
-	} catch (PDOException $e) {
-		$categoryOptions = [];
+	$orderClause = 'total_sales DESC, p.product_id DESC';
+	if ($sortKey === 'name') {
+		$orderClause = 'p.product_name ASC';
+	} elseif ($sortKey === 'price') {
+		$orderClause = 'p.product_price ASC';
 	}
 
-	$sql = 'SELECT p.product_id, p.product_name, p.product_price, p.product_stock, p.product_image, c.category_name
-			FROM product p
-			LEFT JOIN category c ON p.category_id = c.category_id
-			WHERE p.product_status = 1';
-	$params = [];
-	if ($categoryFilter !== '') {
-		$sql .= ' AND c.category_name = :category';
-		$params[':category'] = $categoryFilter;
-	}
-	$sql .= ' ORDER BY p.product_id DESC';
+	$sql = 'SELECT p.product_id, p.product_name, p.product_price, p.product_stock, p.product_image, c.category_name,
+		   COALESCE(st.total_sales,0) AS total_sales
+		FROM product p
+		LEFT JOIN category c ON p.category_id = c.category_id
+		LEFT JOIN (
+			SELECT product_id, SUM(sales_sold) AS total_sales
+			FROM sales
+			GROUP BY product_id
+		) st ON p.product_id = st.product_id
+		WHERE p.product_status = 1
+		ORDER BY ' . $orderClause;
 
 	try {
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute($params);
+		$stmt = $pdo->query($sql);
 		$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $e) {
 		$errorMessage = '商品情報の取得に失敗しました。';
 		$products = [];
 	}
 } else {
-	$categoryOptions = ['プロテイン'];
 	$sampleProducts = [
 		[
 			'product_id' => 2,
@@ -48,6 +55,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 			'product_stock' => 1874,
 			'product_image' => 'pimage/トロピカルプロテイン1.jpeg',
 			'category_name' => 'プロテイン',
+			'total_sales' => 980,
 		],
 		[
 			'product_id' => 3,
@@ -56,6 +64,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 			'product_stock' => 1211,
 			'product_image' => 'pimage/チョコプロテイン1.jpeg',
 			'category_name' => 'プロテイン',
+			'total_sales' => 1230,
 		],
 		[
 			'product_id' => 4,
@@ -64,6 +73,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 			'product_stock' => 1311,
 			'product_image' => 'pimage/雪プロテイン1.jpeg',
 			'category_name' => 'プロテイン',
+			'total_sales' => 860,
 		],
 		[
 			'product_id' => 5,
@@ -72,6 +82,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 			'product_stock' => 520,
 			'product_image' => 'pimage/森プロテイン1.jpeg',
 			'category_name' => 'プロテイン',
+			'total_sales' => 640,
 		],
 		[
 			'product_id' => 6,
@@ -80,18 +91,20 @@ if (isset($pdo) && $pdo instanceof PDO) {
 			'product_stock' => 2911,
 			'product_image' => 'pimage/紫プロテイン1.jpeg',
 			'category_name' => 'プロテイン',
+			'total_sales' => 1100,
 		],
 	];
 
-	if ($categoryFilter !== '') {
-		foreach ($sampleProducts as $product) {
-			if ($product['category_name'] === $categoryFilter) {
-				$products[] = $product;
-			}
+	$products = $sampleProducts;
+	usort($products, function ($a, $b) use ($sortKey) {
+		if ($sortKey === 'name') {
+			return strcmp($a['product_name'], $b['product_name']);
 		}
-	} else {
-		$products = $sampleProducts;
-	}
+		if ($sortKey === 'price') {
+			return $a['product_price'] <=> $b['product_price'];
+		}
+		return ($b['total_sales'] ?? 0) <=> ($a['total_sales'] ?? 0);
+	});
 }
 ?>
 <!DOCTYPE html>
@@ -112,19 +125,21 @@ if (isset($pdo) && $pdo instanceof PDO) {
 		<p class="ap-lead">FitFuel が取り扱う全商品をカテゴリ別にチェック。気になるアイテムはその場で詳細ページへジャンプできます。</p>
 	</section>
 
-	<section class="ap-filter">
-		<div class="ap-filter-row">
-			<a class="ap-pill<?php echo ($categoryFilter === '' ? ' active' : ''); ?>" href="G01_商品一覧.php">すべて</a>
-			<?php foreach ($categoryOptions as $categoryName): ?>
-				<?php $isActive = ($categoryName === $categoryFilter); ?>
-				<a class="ap-pill<?php echo $isActive ? ' active' : ''; ?>" href="G01_商品一覧.php?category=<?php echo urlencode($categoryName); ?>">
-					<?php echo htmlspecialchars($categoryName, ENT_QUOTES); ?>
-				</a>
-			<?php endforeach; ?>
-		</div>
-		<?php if ($categoryFilter !== ''): ?>
-			<p class="ap-filter-note">現在「<?php echo htmlspecialchars($categoryFilter, ENT_QUOTES); ?>」カテゴリを表示中です。</p>
-		<?php endif; ?>
+	<section class="ap-sort">
+		<form method="get" class="ap-sort-form">
+			<label for="sort" class="ap-sort-label">表示順</label>
+			<div class="ap-sort-control">
+				<select id="sort" name="sort" class="ap-sort-select" onchange="this.form.submit()">
+					<?php foreach ($sortLabels as $key => $label): ?>
+						<option value="<?php echo $key; ?>" <?php echo $sortKey === $key ? 'selected' : ''; ?>><?php echo htmlspecialchars($label, ENT_QUOTES); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<noscript>
+					<button type="submit" class="ap-sort-button">並び替える</button>
+				</noscript>
+			</div>
+			<p class="ap-sort-note">人気順は売上集計（indexのランキングと同じ sales テーブル）をもとに計算しています。</p>
+		</form>
 	</section>
 
 	<section class="ap-results">
@@ -146,6 +161,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 							<h2 class="ap-title"><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES); ?></h2>
 							<p class="ap-price">¥<?php echo number_format((int)$product['product_price']); ?></p>
 							<p class="ap-stock">在庫：<?php echo (int)$product['product_stock']; ?>個</p>
+							<p class="ap-sales">累計販売：<?php echo number_format((int)($product['total_sales'] ?? 0)); ?>杯</p>
 						</div>
 						<div class="ap-card-footer">
 							<a class="ap-link" href="G02_商品詳細.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES); ?>">詳細を見る</a>
