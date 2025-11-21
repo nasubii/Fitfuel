@@ -113,7 +113,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>商品一覧 | FitFuel</title>
-	<link rel="stylesheet" href="css/G01_ホーム.css">
+	<link rel="stylesheet" href="css/G01_商品一覧.css">
 </head>
 <body>
 <?php require 'G00_ヘッダー.php'; ?>
