@@ -58,7 +58,7 @@ $estimatedArrival = date('n月j日', strtotime('+3 day'));
 
         <div class="next-actions">
             <a href="index.php" class="primary-btn">ショッピングを続ける</a>
-            <a href="G04_カート一覧.php" class="secondary-btn">購入内容を確認</a>
+            <a href="G04_カート一覧.php" class="secondary-btn">カートに戻る</a>
         </div>
         <p class="note">※メールが届かない場合は迷惑メールフォルダもご確認ください。</p>
     </section>
