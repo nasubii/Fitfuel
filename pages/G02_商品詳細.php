@@ -58,6 +58,10 @@ $images = array_values(array_unique($images));
     <?php if (!empty($error)): ?>
         <div class="error-box"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
     <?php else: ?>
+        <?php
+            $stock = (int)$product['product_stock'];
+            $isOutOfStock = $stock <= 0;
+        ?>
         <div class="pd-layout">
             <article class="pd-card pd-card-visual">
                 <div class="pd-carousel" data-images="<?= htmlspecialchars(json_encode($images), ENT_QUOTES, 'UTF-8') ?>">
@@ -85,15 +89,18 @@ $images = array_values(array_unique($images));
                     </div>
                     <div class="pd-card-price">¥<?= number_format((int)$product['product_price']) ?></div>
                 </div>
-                <div class="pd-card-stock">在庫：<?= (int)$product['product_stock'] ?>個</div>
+                <div class="pd-card-stock">在庫：<?= $stock ?>個<?= $isOutOfStock ? '（入荷待ち）' : '' ?></div>
                 <form action="G04_カート一覧.php" method="post" class="pd-cart-form">
                     <input type="hidden" name="product_id" value="<?= (int)$product['product_id'] ?>">
                     <label class="pd-quantity-label">
                         数量
-                        <input type="number" name="quantity" value="1" min="1" max="10" required>
+                        <input type="number" name="quantity" value="1" min="1" max="<?= max(1, min(10, $stock)) ?>" required <?= $isOutOfStock ? 'disabled' : '' ?>>
                     </label>
-                    <button type="submit" class="add-cart">カートに入れる</button>
+                    <button type="submit" class="add-cart" <?= $isOutOfStock ? 'disabled' : '' ?>><?= $isOutOfStock ? '在庫切れ' : 'カートに入れる' ?></button>
                 </form>
+                <?php if ($isOutOfStock): ?>
+                    <p class="pd-stock-note">申し訳ありません、現在在庫切れです。再入荷までお待ちください。</p>
+                <?php endif; ?>
             </article>
         </div>
 
