@@ -138,7 +138,6 @@ if (isset($pdo) && $pdo instanceof PDO) {
 					<button type="submit" class="ap-sort-button">並び替える</button>
 				</noscript>
 			</div>
-			<p class="ap-sort-note">人気順は売上集計（indexのランキングと同じ sales テーブル）をもとに計算しています。</p>
 		</form>
 	</section>
 
