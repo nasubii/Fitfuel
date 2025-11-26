@@ -160,7 +160,6 @@ if (isset($pdo) && $pdo instanceof PDO) {
 							<h2 class="ap-title"><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES); ?></h2>
 							<p class="ap-price">¥<?php echo number_format((int)$product['product_price']); ?></p>
 							<p class="ap-stock">在庫：<?php echo (int)$product['product_stock']; ?>個</p>
-							<p class="ap-sales">累計販売：<?php echo number_format((int)($product['total_sales'] ?? 0)); ?>杯</p>
 						</div>
 						<div class="ap-card-footer">
 							<a class="ap-link" href="G02_商品詳細.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES); ?>">詳細を見る</a>
