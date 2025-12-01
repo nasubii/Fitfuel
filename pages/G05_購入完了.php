@@ -35,7 +35,7 @@ $estimatedArrival = date('n月j日', strtotime('+3 day'));
     <section class="complete-card">
         <div class="complete-icon">✔</div>
         <h1>ご注文ありがとうございます！</h1>
-        <p class="lead">注文番号はマイページよりご確認いただけます。商品の発送準備が整い次第、メールにてご連絡いたします。</p>
+        <p class="lead">商品の発送準備が整い次第、メールにてご連絡いたします。</p>
 
         <ul class="order-stats">
             <li>
