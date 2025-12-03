@@ -19,7 +19,7 @@
                 <h4>サイト</h4>
                 <ul>
                     <li><a href="index.php">ホーム</a></li>
-                    <li><a href="G02_商品詳細.php">商品一覧</a></li>
+                    <li><a href="G01_商品一覧.php">商品一覧</a></li>
                     <li><a href="G04_カート一覧.php">カート</a></li>
                     <li><a href="G05_購入.php">購入手続き</a></li>
                 </ul>
