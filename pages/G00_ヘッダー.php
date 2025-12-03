@@ -56,7 +56,6 @@
                         $qParam = '&q='.urlencode($_GET['q']);
                     }
                     ?>
-                    <a href="G01_商品一覧.php">商品一覧</a>
                     <a href="G03_検索結果.php?category=%E3%83%93%E3%82%BF%E3%83%9F%E3%83%B3<?php echo $qParam; ?>">ビタミン</a>
                     <a href="G03_検索結果.php?category=%E3%83%97%E3%83%AD%E3%83%86%E3%82%A4%E3%83%B3<?php echo $qParam; ?>">プロテイン</a>
                     <a href="G03_検索結果.php?category=%E3%82%B5%E3%83%97%E3%83%AA%E3%83%A1%E3%83%B3%E3%83%88<?php echo $qParam; ?>">サプリメント</a>
