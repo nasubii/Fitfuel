@@ -170,7 +170,7 @@ $cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
                         <h3>カード情報</h3>
                         <div class="form-group">
                             <label for="card_number">カード番号<span class="required">必須</span></label>
-                            <input type="text" id="card_number" name="card_number" inputmode="numeric" placeholder="1234 5678 9012 3456" minlength="13" maxlength="16" value="<?= htmlspecialchars($formData['card_number'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <input type="text" id="card_number" name="card_number" inputmode="numeric" placeholder="1234 5678 9012 3456" minlength="16" maxlength="16" value="<?= htmlspecialchars($formData['card_number'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
