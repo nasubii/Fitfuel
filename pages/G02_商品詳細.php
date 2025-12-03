@@ -75,7 +75,6 @@ $images = array_values(array_unique($images));
                     <?php endif; ?>
                 </div>
                 <div class="pd-carousel-info">
-                    <span>選ばれる理由 No.1</span>
                     <h1><?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?></h1>
                     <p>カテゴリ: <?= htmlspecialchars($product['category_name'] ?? 'その他', ENT_QUOTES, 'UTF-8') ?></p>
                 </div>

@@ -21,6 +21,28 @@
     $q = isset($_GET['q']) ? trim($_GET['q']) : '';
     $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
+    $categoryProfiles = [
+        'ビタミン' => [
+            'label' => 'ビタミン',
+            'title' => '毎日のコンディションを支えるビタミン',
+            'description' => '疲労回復や肌・免疫のサポートに役立つ複数種のビタミンをブレンド。忙しい日々でも栄養バランスを整えられます。',
+            'image' => '../refpic/vitamin.png',
+        ],
+        'プロテイン' => [
+            'label' => 'プロテイン',
+            'title' => '筋力・回復に寄り添うプロテイン',
+            'description' => '効率よくタンパク質を補給し、トレーニング後の筋肉をケア。飲みやすさにこだわったホエイ・ソイをお届けします。',
+            'image' => '../refpic/protein.png',
+        ],
+        'サプリメント' => [
+            'label' => 'サプリメント',
+            'title' => '不足しがちな栄養を補うサプリメント',
+            'description' => 'クレアチンやアミノ酸など、目的に応じて組み合わせて摂れる一粒。健康習慣の頼れる味方です。',
+            'image' => '../refpic/supplement.png',
+        ],
+    ];
+    $categoryHero = isset($categoryProfiles[$category]) ? $categoryProfiles[$category] : null;
+
     if (isset($pdo) && $pdo instanceof PDO) {
         $sql = "SELECT p.product_id, p.product_name AS title, p.product_price AS price, p.product_image AS image, c.category_name AS category
                 FROM product p
@@ -95,6 +117,16 @@
     ?>
 
     <main class="search-results-page">
+        <?php if ($categoryHero): ?>
+            <section class="category-hero" style="background-image:url('<?php echo htmlspecialchars($categoryHero['image'], ENT_QUOTES); ?>')">
+                <div class="category-hero-overlay"></div>
+                <div class="category-hero-content">
+                    <p class="category-hero-label"><?php echo htmlspecialchars($categoryHero['label'], ENT_QUOTES); ?></p>
+                    <h1 class="category-hero-title"><?php echo htmlspecialchars($categoryHero['title'], ENT_QUOTES); ?></h1>
+                    <p class="category-hero-description"><?php echo htmlspecialchars($categoryHero['description'], ENT_QUOTES); ?></p>
+                </div>
+            </section>
+        <?php endif; ?>
         <section class="results-panel">
             <h1 class="results-title"><?php echo ($q === '') ? '検索結果' : '「'.htmlspecialchars($q, ENT_QUOTES).'」の検索結果'; ?></h1>
 
