@@ -183,7 +183,7 @@ $cartTotal = $cartSubtotal + ($cartSubtotal > 0 ? $shippingFee : 0);
                             </div>
                             <div class="form-group">
                                 <label for="card_cvv">セキュリティコード<span class="required">必須</span></label>
-                                <input type="text" id="card_cvv" name="card_cvv" placeholder="123" maxlength="4" value="<?= htmlspecialchars($formData['card_cvv'], ENT_QUOTES, 'UTF-8'); ?>">
+                                <input type="text" id="card_cvv" name="card_cvv" placeholder="123" maxlength="3" value="<?= htmlspecialchars($formData['card_cvv'], ENT_QUOTES, 'UTF-8'); ?>">
                             </div>
                         </div>
                         <div class="form-group">
