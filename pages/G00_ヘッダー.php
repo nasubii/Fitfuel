@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/G00_ヘッダー.css" rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/x-icon" href="./fabicon/logo.ico">
+        <link rel="icon" type="image/x-icon" href="/fabicon/logo.ico">
     <style>
         /* フォールバック: 外部CSSが読み込まれない場合でもヘッダーを固定し中央揃え */
         .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;width:100%;display:flex;flex-direction:column;align-items:center}
