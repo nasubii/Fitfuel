@@ -10,7 +10,7 @@
         .site-header > *{width:100%;display:flex;justify-content:center}
         body{padding-top:72px}
     </style>
-    <title>ヘッダー</title>
+    <title>Fitfuel</title>
 </head>
 <body>
     <header class="site-header">
