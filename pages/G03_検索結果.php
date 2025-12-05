@@ -38,7 +38,7 @@
             'label' => 'サプリメント',
             'title' => '不足しがちな栄養を補うサプリメント',
             'description' => 'クレアチンやアミノ酸など、目的に応じて組み合わせて摂れる一粒。健康習慣の頼れる味方です。',
-            'image' => 'pimage/サプリメント_トロピカルパイン copy.jpeg',
+            'image' => 'pimage/Creatine Fuel Max中身.jpeg',
         ],
     ];
     $categoryHero = isset($categoryProfiles[$category]) ? $categoryProfiles[$category] : null;
