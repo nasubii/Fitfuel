@@ -26,19 +26,19 @@
             'label' => 'ビタミン',
             'title' => '毎日のコンディションを支えるビタミン',
             'description' => '疲労回復や肌・免疫のサポートに役立つ複数種のビタミンをブレンド。忙しい日々でも栄養バランスを整えられます。',
-            'image' => '../pimage/FitFuel MULTI VITAMIN DAILY_1.jpeg',
+            'image' => 'pimage/FitFuel MULTI VITAMIN DAILY_2.jpeg',
         ],
         'プロテイン' => [
             'label' => 'プロテイン',
             'title' => '筋力・回復に寄り添うプロテイン',
             'description' => '効率よくタンパク質を補給し、トレーニング後の筋肉をケア。飲みやすさにこだわったホエイ・ソイをお届けします。',
-            'image' => '../pimage/チョコプロテイン1.jpeg',
+            'image' => 'pimage/チョコプロテイン2.jpeg',
         ],
         'サプリメント' => [
             'label' => 'サプリメント',
             'title' => '不足しがちな栄養を補うサプリメント',
             'description' => 'クレアチンやアミノ酸など、目的に応じて組み合わせて摂れる一粒。健康習慣の頼れる味方です。',
-            'image' => '../pimage/サプリメント_トロピカルパイン copy.jpeg',
+            'image' => 'pimage/サプリメント_トロピカルパイン copy.jpeg',
         ],
     ];
     $categoryHero = isset($categoryProfiles[$category]) ? $categoryProfiles[$category] : null;
