@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (mb_strlen($login_id) > 100) {
                 $errors['login_id'] = 'ログインIDは100文字以内で入力してください。';
         }
-        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+        if (!preg_match('/^[A-Za-z0-9.!#$%&\'"*+\/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $mail)) {
                 $errors['mail'] = 'メールアドレスの形式で入力してください。';
         } elseif (mb_strlen($mail) > 100) {
                 $errors['mail'] = 'メールアドレスは100文字以内で入力してください。';
